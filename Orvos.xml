@@ -1,0 +1,37 @@
+<?xml-stylesheet type="text/xsl" href="Orvos.xsl"?><Adatbazis xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="Orvos1.xsd">
+	
+  	<Rendeles Rendeles_id="0">
+   		 <Rendeles_datum>2012-12-13</Rendeles_datum>
+   		 <Allapot>Fogadva</Allapot>
+ 	</Rendeles>
+ 	 
+  	<Anyakonyv anyakonyv_id="123" szulo_id="123">
+    	<Gyermek_neve>Béla</Gyermek_neve>
+    	<Szul_datum>2012-12-13</Szul_datum>
+   		<Oltasok>Tifusz</Oltasok>
+    	<Kezelesek>Tüdőröntgen</Kezelesek>
+    	<Nem>fiú</Nem>
+    	<Kep forras="str1234"/>
+    	<Szulo szulo_id="123">
+      				<Teljes_nev>Boros Bence</Teljes_nev>
+     				<Telefonszam>06907634647</Telefonszam>
+    				<email_cim>benceboros11@gmail.com</email_cim>
+     		<Szulo_info szulo_id="123">
+       				<Teljes_nev>Boros Bence</Teljes_nev>
+        			<Telefonszam>asd1234</Telefonszam>
+        			<email_cim>benceboros11@gmail.com</email_cim>
+      		</Szulo_info>
+      				<Irszam>5122</Irszam>
+     				<Varos>Jászdózsa</Varos>
+      				<Utca_hsz>Dózsa György út 42.</Utca_hsz>
+    	</Szulo>
+  	</Anyakonyv>  
+  <Termekek Termek_id="123">
+   					 <Raktarkeszlet>Keszleten</Raktarkeszlet>
+   					 <Ar>0</Ar>
+    				<Termeknev>str1234</Termeknev>
+    	<Beszallito ceg_id="123">
+     				 <Ceg_neve>str1234</Ceg_neve>
+    	</Beszallito>
+  </Termekek>
+</Adatbazis>

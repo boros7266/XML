@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Boros Bence, EWE89T -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+elementFormDefault="qualified">
+ <xs:complexType name="kep_tipus"> <xs:attribute
+name="forras" type="xs:string" />
+ </xs:complexType>
+ <xs:complexType name="Beszallito_tipus">
+ <xs:sequence>
+ <xs:element name="Ceg_neve" type="xs:string" />
+ </xs:sequence>
+ <xs:attribute name="ceg_id" type="xs:int" use="required" />
+ </xs:complexType>
+ <xs:complexType name="Szulo_alap_tipus">
+ <xs:sequence>
+ <xs:element name="Teljes_nev" type="xs:string" />
+ <xs:element name="Telefonszam" type="xs:string" />
+ <xs:element name="email_cim">
+ <xs:simpleType>
+ <xs:restriction base="xs:string">
+ <xs:pattern value="[^@]+@[^\.]+\..+" />
+ </xs:restriction>
+ </xs:simpleType>
+ </xs:element>
+ </xs:sequence>
+ <xs:attribute name="szulo_id" type="xs:int" use="required"/>
+ </xs:complexType>
+ <xs:complexType name="Orvos_alap_tipus">
+ <xs:sequence>
+ <xs:element name="Nev" type="xs:string" />
+ <xs:element name="Rendelesi_ido" type="xs:string" />
+ </xs:sequence>
+ <xs:attribute name="azonosito" type="xs:int"
+use="required" />
+ </xs:complexType>
+ <!-- Boviteses szarmaztatas, Szülő, Orvos tipusa,
+complexType -->
+ <xs:complexType name="Szulo_tipus">
+ <xs:complexContent>
+ <xs:extension base="Szulo_alap_tipus">
+ <xs:sequence>
+ <xs:element name="Szulo_info"
+type="Szulo_alap_tipus" />
+ <xs:element name="Irszam" type="xs:string" />
+ <xs:element name="Varos" type="xs:string" />
+ <xs:element name="Utca_hsz" type="xs:string" />
+ </xs:sequence>
+ </xs:extension>
+ </xs:complexContent>
+ </xs:complexType>
+ <xs:complexType name="Orvos_tipus">
+ <xs:complexContent>
+ <xs:extension base="Orvos_alap_tipus">
+ <xs:sequence>
+ <xs:element name="Orvos_info"
+type="Orvos_alap_tipus" />
+ <xs:element name="Irszam" type="xs:string" />
+ <xs:element name="Varos" type="xs:string" />
+ <xs:element name="Utca_hsz" type="xs:string" />
+ </xs:sequence>
+ </xs:extension>
+ </xs:complexContent>
+ </xs:complexType>
+ <!-- Megszoritasos szarmaztatasok, simpleType -->
+ <xs:simpleType name="Termekek_raktarkeszlet_tipus"
+final="restriction">
+ <xs:restriction base="xs:string">
+ <xs:enumeration value="Keszleten" />
+ <xs:enumeration value="Rendelheto" />
+ <xs:enumeration value="Elfogyott" />
+ </xs:restriction>
+ </xs:simpleType>
+ <xs:simpleType name="Rendeles_allapot_tipus"
+final="restriction">
+ <xs:restriction base="xs:string">
+ <xs:enumeration value="Fogadva" />
+ <xs:enumeration value="Feldolgozas_alatt" />
+ <xs:enumeration value="Kiszallitas_alatt" />
+ <xs:enumeration value="Kiszallitva" />
+ </xs:restriction>
+ </xs:simpleType>
+ <xs:simpleType name="Anyakonyv_neme"
+final="restriction">
+ <xs:restriction base="xs:string">
+ <xs:enumeration value="fiú" />
+ <xs:enumeration value="lány" />
+ </xs:restriction>
+ </xs:simpleType>
+ <!-- Megszoritasos szarmaztatasok vege-->
+ <!-- Tipusok -->
+ <xs:complexType name="Anyakonyv_tipus">
+ <xs:sequence>
+ <xs:element name="Gyermek_neve" type="xs:string" />
+ <xs:element name="Szul_datum" type="xs:date" />
+ <xs:element name="Oltasok" type="xs:string" />
+ <xs:element name="Kezelesek" type="xs:string" />
+ <xs:element name="Nem" type="Anyakonyv_neme" />
+ <xs:element name="Kep" type="kep_tipus" />
+ <xs:element name="Szulo"
+type="Szulo_tipus" />
+ </xs:sequence>
+ <xs:attribute name="anyakonyv_id" type="xs:int"
+use="required" />
+ <xs:attribute name="szulo_id" type="xs:int" use="required"/>
+ </xs:complexType>
+ <xs:complexType name="Rendeles_tipus">
+ <xs:sequence>
+ <xs:element name="Rendeles_datum" type="xs:date" />
+ <xs:element name="Allapot"
+type="Rendeles_allapot_tipus" />
+ </xs:sequence>
+ <xs:attribute name="Rendeles_id" type="xs:int"
+use="required" />
+ </xs:complexType>
+ <xs:complexType name="Termekek_tipus">
+ <xs:sequence>
+ <xs:element name="Raktarkeszlet"
+type="Termekek_raktarkeszlet_tipus" />
+ <xs:element name="Ar" type="xs:int" />
+ <xs:element name="Termeknev" type="xs:string" />
+ <xs:element name="Beszallito"
+type="Beszallito_tipus" />
+ </xs:sequence>
+ <xs:attribute name="Termek_id" type="xs:int"
+use="required" />
+ </xs:complexType>
+ <xs:complexType name="Adatbazis_tipus">
+ <xs:sequence>
+ <xs:element name="Rendeles" type="Rendeles_tipus"
+ minOccurs="0" maxOccurs="unbounded" />
+ <xs:element name="Anyakonyv" type="Anyakonyv_tipus"
+ minOccurs="0" maxOccurs="unbounded" />
+ <xs:element name="Beszallito" type="Beszallito_tipus"
+ minOccurs="0" maxOccurs="unbounded" />
+ <xs:element name="Szulo" type="Szulo_tipus"
+ minOccurs="0" maxOccurs="unbounded" />
+ <xs:element name="Termekek" type="Termekek_tipus"
+ minOccurs="0" maxOccurs="unbounded" />
+ </xs:sequence>
+ </xs:complexType>
+ <xs:element name="Adatbazis" type="Adatbazis_tipus">
+ <!-- Kulcsok -->
+ <xs:key name="anyakonyv_id_kulcs">
+ <xs:selector xpath="Orvos/Anyakonyv" />
+ <xs:field xpath="@anyakonyv_id" />
+ </xs:key>
+ <xs:key name="szulo_id_kulcs">
+ <xs:selector xpath="Orvos/Szulo" />
+ <xs:field xpath="@szulo_id" />
+ </xs:key>
+ <xs:key name="ceg_id_kulcs">
+ <xs:selector xpath="Orvos/Termekek/Beszallito" />
+ <xs:field xpath="@ceg_id" />
+ </xs:key>
+ <xs:key name="termek_id_kulcs">
+ <xs:selector xpath="Orvos/Termekek" />
+ <xs:field xpath="@termek_id" />
+ </xs:key>
+ <!-- Idegen kulcsok -->
+ <xs:keyref refer="ceg_id_kulcs" name="GyogyszerBeszallito">
+ <xs:selector xpath="Orvos/Termekek/Beszallito" />
+ <xs:field xpath="@ceg_id" />
+ </xs:keyref>
+ <xs:keyref refer="ceg_id_kulcs"
+name="GyogyszerkeszitmenyBeszallito">
+ <xs:selector xpath="Orvos/Termekek/Beszallito" />
+ <xs:field xpath="@ceg_id" />
+ </xs:keyref>
+ <xs:keyref refer="ceg_id_kulcs"
+name="FelszerelesBeszallito">
+ <xs:selector xpath="Orvos/Termekek/Beszallito" />
+ <xs:field xpath="@ceg_id" />
+ </xs:keyref>
+ </xs:element>
+</xs:schema>
